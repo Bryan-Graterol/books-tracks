@@ -18,19 +18,19 @@ const UserContext = createContext<UserContextType | null>(null)
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUserState] = useState<User | null>(() => {
-    const stored = localStorage.getItem('bookshelf_user')
+    const stored = localStorage.getItem('books_tracks_user')
     return stored ? JSON.parse(stored) : null
   })
 
   const setUser = (u: User) => {
-    localStorage.setItem('bookshelf_user', JSON.stringify(u))
-    localStorage.setItem('bookshelf_user_id', u.id)
+    localStorage.setItem('books_tracks_user', JSON.stringify(u))
+    localStorage.setItem('books_tracks_user_id', u.id)
     setUserState(u)
   }
 
   const logout = () => {
-    localStorage.removeItem('bookshelf_user')
-    localStorage.removeItem('bookshelf_user_id')
+    localStorage.removeItem('books_tracks_user')
+    localStorage.removeItem('books_tracks_user_id')
     setUserState(null)
   }
 

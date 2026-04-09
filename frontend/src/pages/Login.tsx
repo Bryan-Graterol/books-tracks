@@ -5,7 +5,7 @@ import { usersApi } from '@/services/books'
 import { ApiError } from '@/services/api'
 import Button from '@/components/ui/Button'
 
-const DEMO_EMAIL = 'demo@bookshelf.demo'
+const DEMO_EMAIL = 'demo@books-tracks.demo'
 
 export default function Login() {
   const { setUser } = useUser()
@@ -66,7 +66,7 @@ export default function Login() {
           <div className="w-10 h-10 rounded-xl bg-amber-400/15 flex items-center justify-center">
             <BookMarked className="w-5 h-5 text-amber-400" />
           </div>
-          <span className="font-serif text-2xl font-semibold text-zinc-100">BookShelf</span>
+          <span className="font-serif text-2xl font-semibold text-zinc-100">Books-Tracks</span>
         </div>
 
         {/* Demo banner */}

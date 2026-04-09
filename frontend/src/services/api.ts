@@ -13,7 +13,7 @@ export class ApiError extends Error {
 function buildHeaders(withUser = true): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (withUser) {
-    const userId = localStorage.getItem('bookshelf_user_id')
+    const userId = localStorage.getItem('books_tracks_user_id')
     if (userId) headers['X-User-Id'] = userId
   }
   return headers

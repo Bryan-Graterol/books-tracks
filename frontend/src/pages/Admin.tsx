@@ -79,7 +79,7 @@ function AdminPanel() {
         </div>
         <div>
           <h1 className="text-2xl font-semibold text-zinc-100">Panel de Admin</h1>
-          <p className="text-zinc-500 text-sm mt-0.5">Control de acceso a BookShelf.</p>
+          <p className="text-zinc-500 text-sm mt-0.5">Control de acceso a Books-Tracks.</p>
         </div>
       </div>
 

@@ -5,12 +5,12 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     # App identity — used in Open Library User-Agent and API docs
-    app_name: str = "BookShelf"
+    app_name: str = "Books-Tracks"
     app_version: str = "0.1.0"
     contact_email: str = "bryangraterol.25@gmail.com"
 
     admin_email: str = "bryangraterol.25@gmail.com"
-    demo_email: str = "demo@bookshelf.demo"
+    demo_email: str = "demo@books-tracks.demo"
     demo_name: str = "Usuario Demo"
 
     database_url: str

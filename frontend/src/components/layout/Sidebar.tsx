@@ -31,7 +31,7 @@ export default function Sidebar() {
         <div className="w-8 h-8 rounded-lg bg-amber-400/15 flex items-center justify-center">
           <BookMarked className="w-4 h-4 text-amber-400" />
         </div>
-        <span className="font-serif text-lg font-semibold text-zinc-100">BookShelf</span>
+        <span className="font-serif text-lg font-semibold text-zinc-100">Books-Tracks</span>
       </div>
 
       {/* Nav */}

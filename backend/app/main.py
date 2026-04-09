@@ -61,7 +61,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=f"{settings.app_name} API",
-    description="Backend para el tracker de lecturas BookShelf.",
+    description="Backend para el tracker de lecturas Books-Tracks.",
     version=settings.app_version,
     contact={"email": settings.contact_email},
     lifespan=lifespan,
