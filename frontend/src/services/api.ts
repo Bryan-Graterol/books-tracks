@@ -1,6 +1,4 @@
-// En desarrollo: vacío → Vite proxy maneja /api/* → backend local
-// En producción: URL completa del backend en Fly.io (ej: https://bookshelf-api.fly.dev)
-const BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
+const BASE_URL = '/api'
 
 export class ApiError extends Error {
   constructor(

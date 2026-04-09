@@ -1,4 +1,5 @@
 import logging
+import ssl
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -8,12 +9,20 @@ from app.config import settings
 
 log = logging.getLogger(__name__)
 
+# Supabase (y cualquier host externo) requiere SSL
+_connect_args: dict = {}
+if any(host in settings.database_url for host in ("supabase.co", "supabase.com")):
+    _ssl_ctx = ssl.create_default_context()
+    _connect_args["ssl"] = _ssl_ctx
+    log.info("SSL habilitado para la conexión a la base de datos")
+
 engine = create_async_engine(
     settings.database_url,
     echo=False,
-    pool_pre_ping=True,   # verifica la conexión antes de usarla
-    pool_size=10,
-    max_overflow=20,
+    pool_pre_ping=True,
+    pool_size=5,       # Supabase free tier tiene límite de conexiones
+    max_overflow=10,
+    connect_args=_connect_args,
 )
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
