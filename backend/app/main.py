@@ -1,4 +1,5 @@
 import logging
+import mimetypes
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -6,7 +7,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.routing import APIRouter
-from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.database import check_connection
@@ -64,10 +64,13 @@ async def health() -> dict:
     return {"status": "ok", "version": settings.app_version}
 
 
-# ── Frontend estático (solo en producción, cuando existe dist/) ───────────────
-if DIST.exists():
-    app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
-
-    @app.get("/{full_path:path}", include_in_schema=False)
-    async def spa(_: str) -> FileResponse:
-        return FileResponse(DIST / "index.html")
+# ── Frontend estático ─────────────────────────────────────────────────────────
+# Catch-all: sirve archivos del dist/ o index.html para rutas de React Router.
+# En desarrollo dist/ no existe, lo cual está bien (Vite dev server lo maneja).
+@app.get("/{full_path:path}", include_in_schema=False)
+async def serve_frontend(full_path: str) -> FileResponse:
+    candidate = DIST / full_path
+    if candidate.exists() and candidate.is_file():
+        media_type, _ = mimetypes.guess_type(str(candidate))
+        return FileResponse(candidate, media_type=media_type or "application/octet-stream")
+    return FileResponse(DIST / "index.html")
