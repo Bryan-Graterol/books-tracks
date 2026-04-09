@@ -1,4 +1,4 @@
-import { Github, Linkedin, Globe, BookMarked, Zap, BarChart3, BookOpen, StickyNote } from 'lucide-react'
+import { Github, Linkedin, Globe, BookMarked, Zap, BarChart3, BookOpen, StickyNote, Code2 } from 'lucide-react'
 
 const FEATURES = [
   { icon: BookOpen, label: 'Seguimiento de lecturas', desc: 'Registra qué estás leyendo, pausado, completado o en lista de espera.' },
@@ -39,12 +39,14 @@ export default function About() {
       {/* Author card */}
       <div className="bento-card mb-4">
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-12 h-12 rounded-xl bg-amber-400/15 flex items-center justify-center shrink-0">
-            <span className="text-amber-400 font-bold text-lg font-serif">BG</span>
-          </div>
+          <img
+            src="/bryan.png"
+            alt="Bryan Graterol"
+            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-surface-border"
+          />
           <div>
             <h2 className="text-lg font-semibold text-zinc-100">Bryan Graterol</h2>
-            <p className="text-sm text-zinc-500">.NET &amp; Backend Developer</p>
+            <p className="text-sm text-zinc-500">NetDev Automation · Automatizaciones para redes</p>
           </div>
         </div>
 
@@ -73,6 +75,25 @@ export default function About() {
           {['FastAPI', 'Python', 'PostgreSQL', 'React', 'TypeScript', 'Tailwind CSS', 'Fly.io', 'Supabase'].map((t) => (
             <span key={t} className="text-xs px-2.5 py-1 rounded-lg bg-surface-hover text-zinc-400 border border-surface-border">
               {t}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Learning */}
+      <div className="bento-card mb-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Code2 className="w-4 h-4 text-amber-400" />
+          <p className="text-label">Lenguajes que estoy estudiando</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {[
+            { name: 'Rust', color: 'text-orange-400 bg-orange-400/10 border-orange-400/20' },
+            { name: 'Java', color: 'text-blue-400 bg-blue-400/10 border-blue-400/20' },
+            { name: 'Go', color: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20' },
+          ].map(({ name, color }) => (
+            <span key={name} className={`text-sm font-medium px-3 py-1.5 rounded-lg border ${color}`}>
+              {name}
             </span>
           ))}
         </div>
