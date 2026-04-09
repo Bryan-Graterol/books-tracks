@@ -23,5 +23,8 @@ COPY backend/ .
 # Frontend ya compilado (dist/ queda en /app/dist)
 COPY --from=frontend /app/dist ./dist
 
+# Verifica que el frontend quedó en su lugar (falla el build si no está)
+RUN ls -la dist/ && ls -la dist/assets/
+
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

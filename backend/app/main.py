@@ -5,8 +5,9 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.routing import APIRouter
+from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.database import check_connection
@@ -18,12 +19,14 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-DIST = Path(__file__).parent.parent / "dist"
+# Ruta absoluta — independiente del directorio de trabajo
+DIST = Path("/app/dist")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     log.info("Iniciando %s v%s", settings.app_name, settings.app_version)
+    log.info("Frontend dist: %s | existe: %s", DIST, DIST.exists())
     await check_connection()
     yield
     log.info("Apagando servidor")
@@ -47,7 +50,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── API routes (todas bajo /api) ──────────────────────────────────────────────
+# ── API routes ────────────────────────────────────────────────────────────────
 api = APIRouter()
 api.include_router(users.router)
 api.include_router(books.router)
@@ -65,12 +68,20 @@ async def health() -> dict:
 
 
 # ── Frontend estático ─────────────────────────────────────────────────────────
-# Catch-all: sirve archivos del dist/ o index.html para rutas de React Router.
-# En desarrollo dist/ no existe, lo cual está bien (Vite dev server lo maneja).
-@app.get("/{full_path:path}", include_in_schema=False)
-async def serve_frontend(full_path: str) -> FileResponse:
-    candidate = DIST / full_path
-    if candidate.exists() and candidate.is_file():
-        media_type, _ = mimetypes.guess_type(str(candidate))
-        return FileResponse(candidate, media_type=media_type or "application/octet-stream")
-    return FileResponse(DIST / "index.html")
+if DIST.exists():
+    # Sirve assets estáticos con headers de caché correctos
+    app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
+
+    @app.get("/", include_in_schema=False)
+    async def root() -> FileResponse:
+        return FileResponse(DIST / "index.html")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa(full_path: str) -> FileResponse:
+        candidate = DIST / full_path
+        if candidate.is_file():
+            media_type, _ = mimetypes.guess_type(str(candidate))
+            return FileResponse(candidate, media_type=media_type or "application/octet-stream")
+        return FileResponse(DIST / "index.html")
+else:
+    log.warning("dist/ no encontrado en %s — modo desarrollo (sin frontend estático)", DIST)
