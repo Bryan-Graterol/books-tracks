@@ -6,6 +6,7 @@ import {
   BarChart3,
   BookMarked,
   LogOut,
+  Info,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUser } from '@/context/UserContext'
@@ -15,6 +16,7 @@ const NAV_ITEMS = [
   { to: '/library', icon: BookOpen, label: 'Library' },
   { to: '/search', icon: Search, label: 'Add Book' },
   { to: '/stats', icon: BarChart3, label: 'Stats' },
+  { to: '/about', icon: Info, label: 'About' },
 ]
 
 export default function Sidebar() {

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Search, BarChart3, LogOut } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Search, BarChart3, Info, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUser } from '@/context/UserContext'
 
@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { to: '/library', icon: BookOpen, label: 'Libros' },
   { to: '/search', icon: Search, label: 'Buscar' },
   { to: '/stats', icon: BarChart3, label: 'Stats' },
+  { to: '/about', icon: Info, label: 'About' },
 ]
 
 export default function BottomNav() {

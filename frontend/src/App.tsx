@@ -8,6 +8,7 @@ import BookDetail from '@/pages/BookDetail'
 import Reader from '@/pages/Reader'
 import Search from '@/pages/Search'
 import Stats from '@/pages/Stats'
+import About from '@/pages/About'
 
 function AppRoutes() {
   const { user } = useUser()
@@ -26,6 +27,7 @@ function AppRoutes() {
         <Route path="library/:id" element={<BookDetail />} />
         <Route path="search" element={<Search />} />
         <Route path="stats" element={<Stats />} />
+        <Route path="about" element={<About />} />
       </Route>
     </Routes>
   )
