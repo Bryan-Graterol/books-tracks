@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-surface-border;
+  }
+
+  body {
+    @apply bg-surface text-zinc-100 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-600;
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply bg-surface-card border border-surface-border rounded-bento p-5 transition-all duration-200;
+  }
+
+  .bento-card-hover {
+    @apply bento-card hover:bg-surface-hover hover:border-zinc-700 cursor-pointer;
+  }
+
+  .text-label {
+    @apply text-xs font-medium uppercase tracking-widest text-zinc-500;
+  }
+
+  .text-stat {
+    @apply text-4xl font-bold text-zinc-50 tabular-nums;
+  }
+
+  .progress-track {
+    @apply w-full h-1.5 bg-surface-border rounded-full overflow-hidden;
+  }
+
+  .progress-bar {
+    @apply h-full bg-amber-400 rounded-full transition-all duration-500;
+  }
+}

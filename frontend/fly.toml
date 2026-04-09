@@ -1,0 +1,20 @@
+# ⚠️  Cambia 'bookshelf-web' por el nombre único que elijas en Fly.io
+# ⚠️  Cambia la URL de VITE_API_URL para que apunte a tu app de backend
+app = 'bookshelf-web'
+primary_region = 'mia'
+
+[build]
+  [build.args]
+    VITE_API_URL = 'https://bookshelf-api.fly.dev'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
