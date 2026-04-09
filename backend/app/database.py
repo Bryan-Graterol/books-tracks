@@ -9,10 +9,12 @@ from app.config import settings
 
 log = logging.getLogger(__name__)
 
-# Supabase (y cualquier host externo) requiere SSL
+# Supabase usa certificado propio — se requiere SSL pero sin verificación de CA
 _connect_args: dict = {}
 if any(host in settings.database_url for host in ("supabase.co", "supabase.com")):
     _ssl_ctx = ssl.create_default_context()
+    _ssl_ctx.check_hostname = False
+    _ssl_ctx.verify_mode = ssl.CERT_NONE
     _connect_args["ssl"] = _ssl_ctx
     log.info("SSL habilitado para la conexión a la base de datos")
 
