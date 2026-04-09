@@ -4,17 +4,13 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr
 
 
-class UserCreate(BaseModel):
-    name: str
+class AllowedEmailIn(BaseModel):
     email: EmailStr
 
 
-class UserOut(BaseModel):
+class AllowedEmailOut(BaseModel):
     model_config = {"from_attributes": True}
 
     id: uuid.UUID
-    name: str
     email: str
     created_at: datetime
-    is_admin: bool = False
-    is_demo: bool = False

@@ -13,13 +13,30 @@ import type {
 // ── User ─────────────────────────────────────────────────────────────────────
 
 export interface UserPayload { name: string; email: string }
-export interface UserResponse { id: string; name: string; email: string; created_at: string }
+export interface UserResponse {
+  id: string
+  name: string
+  email: string
+  created_at: string
+  is_admin: boolean
+  is_demo: boolean
+}
+export interface AllowedEmailEntry { id: string; email: string; created_at: string }
 
 export const usersApi = {
   create: (body: UserPayload) =>
     api.post<UserResponse>('/users', body, false),
   getByEmail: (email: string) =>
     api.get<UserResponse>(`/users/by-email/${encodeURIComponent(email)}`),
+}
+
+export const adminApi = {
+  listUsers: () => api.get<UserResponse[]>('/admin/users'),
+  listAllowed: () => api.get<AllowedEmailEntry[]>('/admin/allowed-emails'),
+  addAllowed: (email: string) =>
+    api.post<AllowedEmailEntry>('/admin/allowed-emails', { email }),
+  removeAllowed: (email: string) =>
+    api.delete<void>(`/admin/allowed-emails/${encodeURIComponent(email)}`),
 }
 
 // ── Book search (external API) ───────────────────────────────────────────────

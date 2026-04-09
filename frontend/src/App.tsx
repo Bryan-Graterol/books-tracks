@@ -9,6 +9,7 @@ import Reader from '@/pages/Reader'
 import Search from '@/pages/Search'
 import Stats from '@/pages/Stats'
 import About from '@/pages/About'
+import Admin from '@/pages/Admin'
 
 function AppRoutes() {
   const { user } = useUser()
@@ -28,6 +29,7 @@ function AppRoutes() {
         <Route path="search" element={<Search />} />
         <Route path="stats" element={<Stats />} />
         <Route path="about" element={<About />} />
+        <Route path="admin" element={<Admin />} />
       </Route>
     </Routes>
   )

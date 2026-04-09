@@ -18,3 +18,13 @@ class User(Base):
     )
 
     user_books: Mapped[list["UserBook"]] = relationship(back_populates="user")  # type: ignore[name-defined] # noqa: F821
+
+    @property
+    def is_admin(self) -> bool:
+        from app.config import settings
+        return self.email.lower() == settings.admin_email.lower()
+
+    @property
+    def is_demo(self) -> bool:
+        from app.config import settings
+        return self.email.lower() == settings.demo_email.lower()

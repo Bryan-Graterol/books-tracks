@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     contact_email: str = "bryangraterol.25@gmail.com"
 
+    admin_email: str = "bryangraterol.25@gmail.com"
+    demo_email: str = "demo@bookshelf.demo"
+    demo_name: str = "Usuario Demo"
+
     database_url: str
     cors_origins: list[str] = [
         "http://localhost:5173",   # Vite dev

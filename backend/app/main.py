@@ -5,13 +5,16 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.routing import APIRouter
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import select, text
 
 from app.config import settings
-from app.database import check_connection
+from app.database import AsyncSessionLocal, check_connection
+from app.models.user import User
 from app.routers import books, library, notes, sessions, stats, users
+from app.routers import admin as admin_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,11 +26,35 @@ log = logging.getLogger(__name__)
 DIST = Path("/app/dist")
 
 
+async def setup_db() -> None:
+    """Crea la tabla allowed_emails si no existe y siembra el usuario demo."""
+    from app.database import engine
+
+    async with engine.begin() as conn:
+        await conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS allowed_emails (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                email TEXT UNIQUE NOT NULL,
+                created_at TIMESTAMPTZ DEFAULT NOW()
+            )
+        """))
+
+    async with AsyncSessionLocal() as db:
+        demo = await db.scalar(
+            select(User).where(User.email == settings.demo_email)
+        )
+        if not demo:
+            db.add(User(name=settings.demo_name, email=settings.demo_email))
+            await db.commit()
+            log.info("Usuario demo creado: %s", settings.demo_email)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     log.info("Iniciando %s v%s", settings.app_name, settings.app_version)
     log.info("Frontend dist: %s | existe: %s", DIST, DIST.exists())
     await check_connection()
+    await setup_db()
     yield
     log.info("Apagando servidor")
 
@@ -58,6 +85,7 @@ api.include_router(library.router)
 api.include_router(sessions.router)
 api.include_router(notes.router)
 api.include_router(stats.router)
+api.include_router(admin_router.router)
 
 app.include_router(api, prefix="/api")
 

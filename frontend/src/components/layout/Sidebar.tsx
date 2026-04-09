@@ -7,6 +7,7 @@ import {
   BookMarked,
   LogOut,
   Info,
+  ShieldCheck,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUser } from '@/context/UserContext'
@@ -56,6 +57,28 @@ export default function Sidebar() {
             )}
           </NavLink>
         ))}
+
+        {/* Admin link — solo visible para el admin */}
+        {user?.is_admin && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              cn(
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 mt-2 border',
+                isActive
+                  ? 'bg-amber-400/10 text-amber-400 border-amber-400/20'
+                  : 'text-zinc-400 hover:text-zinc-100 hover:bg-surface-hover border-transparent',
+              )
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <ShieldCheck className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-400' : 'text-zinc-500')} />
+                Admin
+              </>
+            )}
+          </NavLink>
+        )}
       </nav>
 
       {/* User */}

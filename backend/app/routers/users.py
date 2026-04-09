@@ -4,7 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.config import settings
 from app.database import get_db
+from app.models.allowed_email import AllowedEmail
 from app.models.user import User
 from app.schemas.user import UserCreate, UserOut
 
@@ -16,15 +18,29 @@ async def create_user(
     body: UserCreate,
     db: AsyncSession = Depends(get_db),
 ):
-    """Crea un nuevo usuario. El email debe ser único."""
-    existing = await db.scalar(select(User).where(User.email == body.email))
+    """Crea un nuevo usuario. El email debe estar en la lista de permitidos."""
+    email = body.email.lower().strip()
+
+    # Admin y demo siempre pasan
+    privileged = {settings.admin_email.lower(), settings.demo_email.lower()}
+    if email not in privileged:
+        allowed = await db.scalar(
+            select(AllowedEmail).where(AllowedEmail.email == email)
+        )
+        if not allowed:
+            raise HTTPException(
+                status_code=403,
+                detail="Este email no está autorizado. Contacta al administrador.",
+            )
+
+    existing = await db.scalar(select(User).where(User.email == email))
     if existing:
         raise HTTPException(
             status_code=409,
-            detail=f"Ya existe un usuario con el email '{body.email}'",
+            detail=f"Ya existe un usuario con el email '{email}'",
         )
 
-    user = User(name=body.name, email=body.email)
+    user = User(name=body.name, email=email)
     db.add(user)
     await db.commit()
     await db.refresh(user)
