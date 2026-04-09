@@ -201,7 +201,7 @@ export default function Dashboard() {
         <p className="text-zinc-500 mt-1 text-sm">Tu resumen de lecturas.</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 auto-rows-[minmax(140px,auto)]">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(140px,auto)]">
 
         {/* ── Currently Reading (2×2) ── */}
         {readingBooks.length > 0 ? (

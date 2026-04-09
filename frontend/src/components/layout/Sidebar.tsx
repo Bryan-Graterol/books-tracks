@@ -22,7 +22,7 @@ export default function Sidebar() {
   const initials = user?.name?.slice(0, 2).toUpperCase() ?? '?'
 
   return (
-    <aside className="flex flex-col w-60 shrink-0 h-screen sticky top-0 border-r border-surface-border bg-surface-card px-4 py-6">
+    <aside className="hidden md:flex flex-col w-60 shrink-0 h-screen sticky top-0 border-r border-surface-border bg-surface-card px-4 py-6">
       {/* Logo */}
       <div className="flex items-center gap-3 px-2 mb-10">
         <div className="w-8 h-8 rounded-lg bg-amber-400/15 flex items-center justify-center">

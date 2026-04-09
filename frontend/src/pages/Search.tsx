@@ -119,23 +119,25 @@ export default function Search() {
             const addError = addErrors[book.external_id]
 
             return (
-              <div key={book.external_id} className="bento-card flex items-start gap-4">
-                <BookCover url={book.cover_url} title={book.title} size="md" />
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-zinc-100 mb-0.5 line-clamp-1">{book.title}</h3>
-                  <p className="text-sm text-zinc-500 mb-2">{book.author}</p>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {book.year && <Badge className="bg-surface-hover text-zinc-500">{book.year}</Badge>}
-                    {book.genre && <Badge className="bg-surface-hover text-zinc-500">{book.genre}</Badge>}
-                    {book.total_pages && <Badge className="bg-surface-hover text-zinc-500">{book.total_pages} págs</Badge>}
+              <div key={book.external_id} className="bento-card flex flex-col sm:flex-row items-start gap-4">
+                <div className="flex items-start gap-4 flex-1 min-w-0">
+                  <BookCover url={book.cover_url} title={book.title} size="md" />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-zinc-100 mb-0.5 line-clamp-1">{book.title}</h3>
+                    <p className="text-sm text-zinc-500 mb-2">{book.author}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {book.year && <Badge className="bg-surface-hover text-zinc-500">{book.year}</Badge>}
+                      {book.genre && <Badge className="bg-surface-hover text-zinc-500">{book.genre}</Badge>}
+                      {book.total_pages && <Badge className="bg-surface-hover text-zinc-500">{book.total_pages} págs</Badge>}
+                    </div>
+                    {book.description && (
+                      <p className="text-xs text-zinc-600 line-clamp-2">{book.description}</p>
+                    )}
+                    {addError && <p className="text-xs text-amber-400 mt-1">{addError}</p>}
                   </div>
-                  {book.description && (
-                    <p className="text-xs text-zinc-600 line-clamp-2">{book.description}</p>
-                  )}
-                  {addError && <p className="text-xs text-amber-400 mt-1">{addError}</p>}
                 </div>
 
-                <div className="flex flex-col gap-2 shrink-0">
+                <div className="flex sm:flex-col gap-2 shrink-0">
                   {isAdded ? (
                     <span className="text-xs text-green-400 font-medium px-3 py-1.5">Agregado ✓</span>
                   ) : (

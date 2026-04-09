@@ -34,7 +34,7 @@ export default function Stats() {
         <p className="text-zinc-500 text-sm mt-1">Tu progreso lector.</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 auto-rows-[minmax(130px,auto)]">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(130px,auto)]">
 
         <BentoCard size="1x1" accent className="flex flex-col justify-between">
           <div className="flex items-center justify-between">

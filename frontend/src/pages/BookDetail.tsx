@@ -178,7 +178,7 @@ export default function BookDetail() {
       </button>
 
       {/* Book header */}
-      <div className="bento-card flex gap-6 mb-6">
+      <div className="bento-card flex flex-col sm:flex-row gap-6 mb-6">
         <BookCover url={book.cover_url} title={book.title} size="xl" />
         <div className="flex-1 min-w-0">
           <div className="flex items-start gap-3 flex-wrap mb-2">
@@ -256,7 +256,7 @@ export default function BookDetail() {
       </div>
 
       {/* Quick stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           { icon: BookOpen, color: 'text-amber-400', bg: 'bg-amber-400/10', label: 'Páginas leídas', value: totalPagesRead },
           { icon: Clock, color: 'text-blue-400', bg: 'bg-blue-400/10', label: 'Tiempo total', value: formatMinutes(totalMinutes) },
