@@ -17,6 +17,16 @@ Es un proyecto personal en constante evolución. Simple, directo, resuelve exact
 - **Lector integrado** — pega un enlace (Project Gutenberg, Standard Ebooks, etc.) y lee sin salir de la app.
 - **Control de acceso** — sistema de invitación: solo emails autorizados pueden registrarse. Incluye cuenta de demo para que otros exploren.
 
+## Capturas
+
+| Dashboard | Biblioteca |
+|-----------|-----------|
+| ![Dashboard](mockups/Dashboard.png) | ![Biblioteca](mockups/Library.png) |
+
+| Agregar libro | Estadísticas |
+|--------------|-------------|
+| ![Agregar libro](mockups/Add-Book.png) | ![Estadísticas](mockups/Stats.png) |
+
 ## Stack
 
 | Capa | Tecnología |
